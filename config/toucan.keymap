@@ -1,4 +1,4 @@
-// Toucan keymap ported from the csstaub42 QMK keymap for the Iris LM,
+// Toucan2 keymap ported from the csstaub42 QMK keymap for the Iris LM,
 // minus the text macros and the accent layer.
 #include <behaviors.dtsi>
 #include <dt-bindings/zmk/keys.h>
@@ -11,6 +11,7 @@
 #define SYM_R 2
 #define MDA   3
 #define NAV   4
+#define MOUSE 5
 
 // Key positions: row 1 = 0-11, row 2 = 12-23, row 3 = 24-35, thumbs = 36-41
 #define KEYS_L   0 1 2 3 4 5 12 13 14 15 16 17 24 25 26 27 28 29
@@ -20,12 +21,18 @@
 
 #define HYPR LS(LC(LA(LGUI)))
 
-// The shield puts the trackpad into scroll mode on layers 1 and 2 (Beekeeb's
-// stock Nav/Sym). Point it at our Nav layer instead.
-&glidepoint_listener {
+// The Toucan2 shield puts the trackpad into scroll mode on layers 1 and 2
+// (Beekeeb's stock Nav/Sym). Point it at our Nav layer instead.
+&trackpad_listener {
     scroller {
         layers = <NAV>;
     };
+};
+
+// The shield activates layer 4 while a finger is on the trackpad so the thumb
+// keys become mouse buttons. Layer 4 is Nav here, so point it at Mouse.
+&is_touching_processor {
+    bindings = <&mo MOUSE>;
 };
 
 / {
@@ -157,8 +164,18 @@
             >;
         };
 
+        // Active while a finger is on the trackpad: thumbs become mouse buttons.
+        mouse {
+            display-name = "MOUSE";
+            bindings = <
+&trans &trans &trans &trans &trans &trans   &trans &trans &trans &trans &trans &trans
+&trans &trans &trans &trans &trans &trans   &trans &trans &trans &trans &trans &trans
+&trans &trans &trans &trans &trans &trans   &trans &trans &trans &trans &trans &trans
+         &mkp MCLK  &mkp LCLK  &mkp RCLK   &mkp LCLK  &mkp RCLK  &mkp MCLK
+            >;
+        };
+
         extra_1 { status = "reserved"; };
         extra_2 { status = "reserved"; };
-        extra_3 { status = "reserved"; };
     };
 };
