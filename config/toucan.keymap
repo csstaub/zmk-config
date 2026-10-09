@@ -9,7 +9,7 @@
 #define BASE  0
 #define SYM_L 1
 #define SYM_R 2
-#define MDA   3
+#define CTRL  3
 #define NAV   4
 #define MOUSE 5
 
@@ -123,7 +123,7 @@
 &kp TAB    &kp Q  &kp W        &kp E         &kp R        &kp T         &kp Y        &kp U        &kp I         &kp O        &kp P     &kp MINUS
 &kp GRAVE  &kp A  &hml LALT S  &hml LCTRL D  &hml LGUI F  &hml HYPR G   &hmr HYPR H  &hmr RGUI J  &hmr RCTRL K  &hmr RALT L  &kp SEMI  &kp SQT
 &osm LSHFT &kp Z  &kp X        &kp C         &kp V        &kp B         &kp N        &kp M        &kp COMMA     &kp DOT      &kp FSLH  &osm RSHFT
-                         &mo NAV  &ltl SYM_R ESC  &bspc_del        &kp RET  &ltr SYM_L SPACE  &mo MDA
+                         &mo NAV  &ltl SYM_R ESC  &bspc_del        &kp RET  &ltr SYM_L SPACE  &mo CTRL
             >;
         };
 
@@ -147,13 +147,16 @@
             >;
         };
 
-        mda {
-            display-name = "MEDIA";
+        // Right outer thumb. Bluetooth and system keys on the left, F keys on the
+        // right so the left home row mods can be chorded with them. Each half
+        // has its own &bootloader since that behavior runs on the half pressed.
+        ctrl {
+            display-name = "CTRL";
             bindings = <
-&trans  &trans  &trans      &kp F14               &kp F15               &trans   &bt BT_SEL 0  &bt BT_SEL 1  &bt BT_SEL 2  &bt BT_SEL 3  &bt BT_SEL 4  &bt BT_CLR
-&trans  &trans  &kp C_MUTE  &kp LS(LA(K_VOL_DN))  &kp LS(LA(K_VOL_UP))  &trans   &out OUT_TOG  &trans        &trans        &trans        &trans        &studio_unlock
-&trans  &trans  &trans      &trans                &trans                &bootloader   &bootloader   &trans        &trans        &trans        &trans        &trans
-                                   &trans &trans &trans   &trans &trans &trans
+&bt BT_CLR  &bt BT_SEL 0  &bt BT_SEL 1  &bt BT_SEL 2          &bt BT_SEL 3          &bt BT_SEL 4    &trans       &kp F1  &kp F2   &kp F3   &kp F4   &trans
+&trans      &out OUT_TOG  &kp C_MUTE    &kp LS(LA(K_VOL_DN))  &kp LS(LA(K_VOL_UP))  &trans          &trans       &kp F5  &kp F6   &kp F7   &kp F8   &studio_unlock
+&trans      &trans        &trans        &kp F14               &kp F15               &bootloader     &bootloader  &kp F9  &kp F10  &kp F11  &kp F12  &trans
+                                                      &trans &trans &trans   &trans &trans &trans
             >;
         };
 
